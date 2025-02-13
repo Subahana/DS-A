@@ -77,6 +77,17 @@ class Single_list:
                 return True
         print(False)
         return False
+    
+    def reverse_list(self):
+        prev = None
+        curr = self.head
+        while curr:
+            next_node = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next_node
+        self.head = prev
+        return self.head
 
 #  ----------DOUBLY LINKED LIST -----------#
 
@@ -158,9 +169,15 @@ a.remove_middle()
 a.insert_at_postion(77,3)
 a.print_list()
 a.cycle_list()
+a.print_list()
+a.insert_at_postion(100,2)
+a.print_list()
+a.reverse_list()
+a.print_list()
 
-b=Circle_list()
-b.insert_at_end(10)
-print(b.cycle_in_list())
-b.print_cycle()
-print(b.cycle_list())
+
+# b=Circle_list()
+# b.insert_at_end(10)
+# print(b.cycle_in_list())
+# b.print_cycle()
+# print(b.cycle_list())
