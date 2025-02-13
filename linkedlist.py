@@ -68,6 +68,7 @@ class Single_list:
             slow=slow.next
             fast=fast.next.next
         prev.next=slow.next
+
     def cycle_list(self):
         start=self.head
         while start:
@@ -88,6 +89,44 @@ class Single_list:
             curr = next_node
         self.head = prev
         return self.head
+    def remove_duplicates(self):
+        if self.head is None:
+            return 
+        start = self.head
+        prev=None
+        while start and start.next:
+            if start.data == start.next.data:
+                start.next=start.next.next
+                prev=start.next
+            else:
+                start = start.next
+                prev=start
+    def remove_duplicates_unsorted(self):
+        if self.head is None or self.head.next is None:
+            return
+        sigma=set()
+        start=self.head
+        prev=None
+        while start:
+            if start.data in sigma:
+                prev.next= start.next
+            else:
+                sigma.add(start.data)
+                prev=start
+            start=start.next
+
+    
+def merge_list_at_end(list1,list2):
+    if list1 is None or list2 is None:
+        return list1 or list2
+    start=list1.head
+    while start and start.next:
+        start = start.next
+    start.next = list2.head
+    return list1
+
+
+
 
 #  ----------DOUBLY LINKED LIST -----------#
 
@@ -174,10 +213,21 @@ a.insert_at_postion(100,2)
 a.print_list()
 a.reverse_list()
 a.print_list()
-
-
+b=Single_list()
+b.insert_at_end(55)
+b.print_list()
+m=merge_list_at_end(a,b)
+m.print_list()
+m.insert_at_end(55)
+m.insert_at_end(77)
+m.print_list()
+m.remove_duplicates()
+m.print_list()
+m.remove_duplicates_unsorted()
+m.print_list()
 # b=Circle_list()
 # b.insert_at_end(10)
 # print(b.cycle_in_list())
 # b.print_cycle()
 # print(b.cycle_list())
+
