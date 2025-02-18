@@ -90,3 +90,19 @@ def binary_search(target,arr,left,right):
 arr=[0,1,2,3,4,5,6,7,8]
 target=0
 print(binary_search(target,arr,0,len(arr)-1))
+
+# ------finding digit sum ----#
+
+def digit_sum(n):
+    if n == 0:
+        return n
+    return n % 10 +digit_sum(n//10)
+print(digit_sum(2))
+def digit_sum_str(n):
+    n=str(n)
+    if n == '':
+        return 0
+    return int(n[0]) + digit_sum_str(n[1:])
+print(digit_sum_str(2))
+x=[1,2,3]
+print(x[::-1])

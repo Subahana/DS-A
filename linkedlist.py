@@ -11,7 +11,6 @@ class Node:
 class Single_list:
     def __init__(self):
         self.head=None
-
     def insert_at_first(self,data):
         new=Node(data)
         if self.head is None:
@@ -25,7 +24,6 @@ class Single_list:
             print(start.data,end='->')
             start=start.next
         print(None)
-        
     def insert_at_end(self,data):
         new=Node(data)
         if self.head is None:
@@ -35,6 +33,7 @@ class Single_list:
         while start and start.next:
             start = start.next
         start.next=new
+        
     def insert_at_postion(self,data,pos):
         new=Node(data)
         if pos == 0:
@@ -51,7 +50,6 @@ class Single_list:
             start =start .next
         new.next =start.next
         start.next= new
-
     def find_middle(self):
         slow,fast=self.head,self.head
         while fast and fast.next:
@@ -59,7 +57,6 @@ class Single_list:
             fast=fast.next.next
         print(slow.data)
         return slow
-        
     def remove_middle(self):
         slow,fast=self.head,self.head
         prev=None
@@ -68,7 +65,6 @@ class Single_list:
             slow=slow.next
             fast=fast.next.next
         prev.next=slow.next
-
     def cycle_list(self):
         start=self.head
         while start:
@@ -78,7 +74,6 @@ class Single_list:
                 return True
         print(False)
         return False
-    
     def reverse_list(self):
         prev = None
         curr = self.head
@@ -114,8 +109,29 @@ class Single_list:
                 sigma.add(start.data)
                 prev=start
             start=start.next
-
-    
+    def delete_end_elemen(self):
+        if self.head is None:
+            return
+        elif self.head.next is None:
+            self.head = None
+            return
+        start= self.head
+        while start and start.next:
+            start = start.next
+        start.next=None
+    def delete_first_element(self):
+        if self.head is None:
+            return 
+        self.head = self.head.next
+    def delete_element_pos(self,pos):
+        if self.head is None:
+            return 
+        if pos == 0:
+            self.head = self.head.next
+        start= self.head
+        for _ in range(pos -1):
+            start = start.next
+        start.next=start.next.next   
 def merge_list_at_end(list1,list2):
     if list1 is None or list2 is None:
         return list1 or list2
@@ -124,12 +140,7 @@ def merge_list_at_end(list1,list2):
         start = start.next
     start.next = list2.head
     return list1
-
-
-
-
 #  ----------DOUBLY LINKED LIST -----------#
-
 class Doubly_list:
     def __init__(self):
         self.head = None
@@ -152,9 +163,7 @@ class Doubly_list:
         self.tail.next = new
         new.prev = self.tail
         self.tail = new
-
 # ------------CIRCULAR LINKED LIST -------------#
-
 class Circle_list:
     def __init__(self):
         self.head=None
@@ -225,9 +234,11 @@ m.remove_duplicates()
 m.print_list()
 m.remove_duplicates_unsorted()
 m.print_list()
-# b=Circle_list()
-# b.insert_at_end(10)
-# print(b.cycle_in_list())
-# b.print_cycle()
-# print(b.cycle_list())
+b=Circle_list()
+b.insert_at_end(10)
+print(b.cycle_in_list())
+b.print_cycle()
+print(b.cycle_list())
+m.delete_element_pos(2)
+m.print_list()
 
