@@ -14,6 +14,8 @@ a=[1,2]
 a.append([1,2])
 print(a)
 
+#  --------hashtable using list ------#
+
 class HashTable:
     def __init__(self,size):
         self.size = size
@@ -44,18 +46,93 @@ class HashTable:
         for y in (self.table):
             print(y)
 
-ht = HashTable(10)
+
+# -------hashtable using linkedlist -------#
+
+class Node:
+    def __init__(self,key,value):
+        self.key = key
+        self.value = value
+        self.next = None
+class HashtableList:
+    def __init__(self,size):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_code(self,key):
+        return hash(key) % self.size
+    
+    def insert(self,key,value):
+        index= self.hash_code(key)
+        if self.table[index] is None :
+            self.table[index] = Node(key,value)
+            return
+        else:
+            start = self.table[index]
+            while start :
+                if start.key == key :
+                    start.value = value
+                    return 
+                elif start.next is None:
+                    break
+                start = start.next
+            start.next = Node(key,value)
+    def display(self):
+        for i in range(self.size):
+            print(i,end =' ')
+            start = self.table[i]
+            while start:
+                print(start.key,start.value,end = ' ')
+                start = start.next
+            print(None)
+    
+    def get(self,key):
+        index = self.hash_code(key)
+        if self.table[index] is None:
+            print(None)
+            return
+        else:
+            start = self.table[index]
+            while start :
+                if start.key == key :
+                    print(f"value of {start.key} is {start.value}")
+                    return 
+                elif start.next is None:
+                    break
+                start = start.next
+            print(None)
+    
+    def remove_key(self,key):
+        index = self.hash_code(key)
+        if self.table[index] is None:
+            return 
+        start = self.table[index]
+        prev = None
+        while start:
+            if start.key == key:
+                if prev is None:
+                    self.table[index] = start.next
+                else:
+                    prev.next = start.next
+                    return True 
+                prev = start 
+                start = start.next
+        return False
+
+            
+ht = HashtableList(10)
 ht.insert("name", "Alice")
 ht.insert("age", 25)
-print(ht.get("age"))  # Output: 25
-ht.remove_key('name')
-print(ht.get('name'))
-ht.insert("name", "Alice")
-ht.insert("age", 25)
+# print(ht.get("age"))  # Output: 25
+# ht.remove_key('name')
+# print(ht.get('name'))
 ht.insert("city", "New York")
 ht.insert("email", "alice@example.com")
-ht.insert("age", 25)
-ht.print_hash()
-a=[1,5,3,9]
-for x,y in enumerate(a):
-    print(x,y)
+ht.get(25)
+ht.remove_key('city')
+ht.display()
+# # ht.print_hash()
+# a=[1,5,3,9]
+# for x,y in enumerate(a):
+#     print(x,y)
+print((ht))
