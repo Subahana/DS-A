@@ -164,3 +164,16 @@ h.enqueue(9999)
 h.enqueue(9)
 h.display()
             
+
+            # ----stack using Queue -----#
+
+class StackUsingQueue:
+    def __init__(self):
+        self.queue1 = deque()
+        self.queue2 = deque()
+
+    def push(self,item):
+        self.queue2.append(item)
+        while self.queue1:
+            self.queue2.append(self.queue1.popleft())
+        self.queue1,self.quuee2 = self.queue2,self.queue1
