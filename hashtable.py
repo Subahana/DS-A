@@ -6,7 +6,7 @@
 
 # # # ------no need of in built hash method for integer
 # def hashCode(key):
-#     # Return a hash value based on the key
+#     # Return a hash value based on the key    
 #     return key % size
 # print(hashCode(100))
 
