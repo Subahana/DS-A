@@ -171,9 +171,58 @@ class StackUsingQueue:
     def __init__(self):
         self.queue1 = deque()
         self.queue2 = deque()
-
-    def push(self,item):
+    
+    def puch(self,item):
         self.queue2.append(item)
         while self.queue1:
             self.queue2.append(self.queue1.popleft())
-        self.queue1,self.quuee2 = self.queue2,self.queue1
+        self.queue1,self.queue2 = self.queue2,self.queue1
+
+
+# /////Stack using linkedlist ////#
+
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.next =None
+
+class stackLinkedlist:
+    def __init__(self):
+        self.top = None
+
+    def push(self,item):
+        new_node = Node(item)
+        new_node.next = self.top
+        self.top = new_node
+
+    def pop(self):
+        if self.top is None:
+            return 
+        pop_item = self.top.data
+        self.top = self.top.next
+        return pop_item
+    def peek(self):
+        if self.top is None:
+            return 
+        return self.top.data
+
+# ////// Stack Using Array ///////#
+
+class StackArray:
+    def __init__(self):
+        self.stack = []
+
+    def push(self,item):
+        self.stack.append(item)
+
+    def pop(self):
+        if len(self.stack) <= 0:
+            return
+        return self.stack.pop()
+    def peek(self):
+        if len(self.stack) <= 0:
+            return 
+        return self.stack[-1]
+    
+m=StackArray()
+print(m.peek())
