@@ -107,6 +107,8 @@
 # binarysearchtree.insert(100)
 # binarysearchtree.insert(10) 
 
+from collections import deque
+
 class Node :
     def __init__(self,value):
         self.value = value 
@@ -147,7 +149,6 @@ class binarySearchTree:
                 self.insert_recursion(node.left,value)
             else:
                 node.left = Node(value)
-
         else:
             if node.right:
                 self.insert_recursion(node.right,value)
@@ -172,6 +173,151 @@ class binarySearchTree:
             self.postorder(node.right)
             print(node.value,end=' ')
 
+    def level_order(self):
+        if not self.root:
+            return 
+        queue = deque()
+        queue.append(self.root)
+        
+        while queue:
+            node=queue.popleft()
+            print(node.value,end = ' ')
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+    
+    def search(self,value):
+        return self.search_recursive(self.root,value)
+    
+    def search_recursive(self,node,value):
+        if not node:
+            return False
+        if node.value == value:
+            return True 
+        if value < node.value:
+            return self.search_recursive(node.left,value)
+        else:
+            return self.search_recursive(node.right,value)
+    
+    def delete(self,value):
+        return self.delete_recursion(self.root,value)
+
+    def delete_recursion(self,node,value):
+        if not node:
+            return node
+        elif value < node.value:
+            node.left = self.delete_recursion(node.left,value)
+        elif value > node.value:
+            node.right = self.delete_recursion(node.right,value)
+        else:
+            if not node.left and not node.right:
+                return None
+            elif not node.left:
+                return node.right 
+            elif not node.right :
+                return node.left
+            temp = self.find_min(node.right)
+            node.value = temp.value
+            node.right = self.delete_recursion(node.right,temp.value)
+        return node
+    
+    def find_min(self,node):
+        current = node
+        while current.left:
+            current = current.left
+        return current
+    
+    def duplicate_remove(self):
+        seen = set()
+        return self.duplicate_delete(self.root,seen)
+
+    def duplicate_delete(self,node,seen):
+        if not node:
+            return node
+        node.left = self.duplicate_delete(node.left,seen)
+        if node.value in seen :
+            return self.delete_recursion(node,node.value)
+        else:
+            seen.add(node.value)
+
+        node.right = self.duplicate_delete(node.right,seen)
+        return node
+        
+    def height(self,node):
+        if not node:
+            return -1
+        node_left=self.height(node.left)
+        node_right=self.height(node.right)
+        return 1 + max(node_left,node_right)
+    
+    def lowest_common_ancestor(self,node,p,q):
+        if not node:
+            return node
+        if p < node.value and q < node.value:
+            return self.lowest_common_ancestor(node.left,p,q)
+        elif p > node.value and q > node.value:
+            return self.lowest_common_ancestor(node.right,p,q)
+        return node
+    
+    def k_th_smallest(self,k):
+        self.count = 0
+        self.result = None
+
+        def inorder(node):
+            if not node or self.result is not None:
+                return 
+            inorder(node.left)
+            self.count += 1
+            if self.count == k:
+                self.result = node.value
+            inorder(node.right)
+        inorder(self.root)
+        return self.result
+    
+
+
+def is_balanced(root):
+    def height(node):
+        if not node:
+            return 0
+        left = height(node.left)
+        if left == -1:
+            return -1
+        right = height(node.right)
+        if right == -1:
+            return -1
+        if abs(left - right) > 1:
+            return -1
+        return 1 + max(left,right)
+    return height(root) != -1
+def height_check(root):
+    if not root:
+        return -1
+    left = height_check(root.left)
+    right = height_check(root.right)
+    return 1 + max(left,right)
+def print_tree(node, level=0, prefix="Root: "):
+    if node is not None:
+        print("   " * level + prefix + str(node.value))
+        if node.left or node.right:
+            print_tree(node.left, level + 1, "L--- ")
+            print_tree(node.right, level + 1, "R--- ")
+
+def diameter(root):
+    diameter = [0]
+    def height(node):
+        if not node:
+            return 0
+        left = height(node.left)
+        right = height(node.right)
+
+        diameter[0] = max(diameter[0],left+right)
+
+        return 1 + max(left,right)
+    height(root)
+    return diameter[0]
+
 tree=binarySearchTree()
 tree.insert(10)
 tree.insert(5)
@@ -184,3 +330,27 @@ print()
 tree.preorder(tree.root)
 print()
 tree.postorder(tree.root)
+print()
+tree.level_order()
+print()
+a=[1,10,2]
+for i in a:
+    tree.insert(i)
+tree.inorder(tree.root)
+print()
+print(tree.search(10))
+tree.delete(11)
+tree.inorder(tree.root)
+tree.duplicate_remove()
+print()
+tree.inorder(tree.root)
+print()
+print(tree.height(tree.root))
+tree.preorder(tree.root)
+print(is_balanced(tree.root))
+print(height_check(tree.root))
+print_tree(tree.root)
+print(diameter(tree.root))
+lca=tree.lowest_common_ancestor(tree.root,8,5)
+print(lca.value)
+print(tree.k_th_smallest(5))
