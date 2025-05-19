@@ -167,7 +167,7 @@ class binarySearchTree:
             self.preorder(node.left)
             self.preorder(node.right)
     
-    def postorder(self,node):
+    def postorder(self,node): # left -> right -> root
         if node:
             self.postorder(node.left)
             self.postorder(node.right)
