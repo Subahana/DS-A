@@ -73,9 +73,6 @@ class Trie:
             node = node.children[char]
         return node.prefix_count
 
-                 
-
-          
 a= Trie()
 a.insert('apple')
 a.insert('a')

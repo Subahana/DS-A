@@ -188,6 +188,7 @@ class graph:
                 if self.has_path(n,end,visited):
                     return True
         return False
+    
     def shortest_path(self,start,end):
         from collections import deque
         queue = deque([(start,[start])])
@@ -202,6 +203,7 @@ class graph:
                     queue.append((n,path+[n]))
                     visited.add(n)
         return None
+    
     def cyclic_undirected(self):
         visited = set()
         def dfs(node,parent):
